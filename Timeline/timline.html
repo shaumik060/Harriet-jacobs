@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive History Timeline</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="timeline-container">
+        <div class="timeline-item" data-history-title="The Big Bang" data-history-content="The universe began with the Big Bang approximately 13.8 billion years ago. This event marked the beginning of time and space as we know it, leading to the formation of fundamental particles.">
+            <div class="timeline-content">
+                <h3>~13.8 Billion BCE</h3>
+                <p>The Big Bang</p>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-history-title="Formation of Earth" data-history-content="Around 4.54 billion years ago, Earth formed from the accretion of material in the solar nebula. Initially a molten body, it gradually cooled to form a solid crust.">
+            <div class="timeline-content">
+                <h3>~4.54 Billion BCE</h3>
+                <p>Formation of Earth</p>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-history-title="First Life Emerges" data-history-content="Evidence suggests that the first life forms, simple single-celled organisms, appeared on Earth about 3.8 billion years ago. These early life forms paved the way for more complex life.">
+            <div class="timeline-content">
+                <h3>~3.8 Billion BCE</h3>
+                <p>First Life Emerges</p>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-history-title="Dinosaurs Roam" data-history-content="The Mesozoic Era (252 to 66 million years ago) saw the rise and dominance of dinosaurs. This period ended with a mass extinction event, likely caused by an asteroid impact.">
+            <div class="timeline-content">
+                <h3>~252-66 Million BCE</h3>
+                <p>Dinosaurs Roam</p>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-history-title="Rise of Homo Sapiens" data-history-content="Modern humans, Homo sapiens, originated in Africa approximately 300,000 years ago. Their development marked significant advancements in tool-making, language, and culture.">
+            <div class="timeline-content">
+                <h3>~300,000 BCE</h3>
+                <p>Rise of Homo Sapiens</p>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-history-title="Ancient Civilizations" data-history-content="Around 3000 BCE, major ancient civilizations like those in Mesopotamia and Egypt began to flourish. These civilizations developed writing, laws, and organized societies.">
+            <div class="timeline-content">
+                <h3>~3000 BCE</h3>
+                <p>Ancient Civilizations</p>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-history-title="Industrial Revolution" data-history-content="Beginning in the late 18th century, the Industrial Revolution brought profound changes to manufacturing, transportation, and daily life, powered by new technologies and energy sources.">
+            <div class="timeline-content">
+                <h3>Late 18th Century CE</h3>
+                <p>Industrial Revolution</p>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-history-title="Digital Age Begins" data-history-content="The mid-20th century saw the dawn of the Digital Age, with the invention of computers and the internet. This era transformed communication, information, and global connectivity.">
+            <div class="timeline-content">
+                <h3>Mid-20th Century CE</h3>
+                <p>Digital Age Begins</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup" id="historyPopup">
+        <span class="popup-close" onclick="closePopup()">&times;</span>
+        <h2 id="popupTitle"></h2>
+        <p id="popupContent"></p>
+    </div>
+
+    <script>
+        // Get all timeline items
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const popup = document.getElementById('historyPopup');
+        const popupTitle = document.getElementById('popupTitle');
+        const popupContent = document.getElementById('popupContent');
+
+        // Add click event listener to each timeline item (specifically the circle/point)
+        timelineItems.forEach(item => {
+            // We want to click on the circle, which is the ::after pseudo-element
+            // Since pseudo-elements can't directly have event listeners, we'll
+            // attach the listener to the parent .timeline-item and check where the click occurred.
+            item.addEventListener('click', function(event) {
+                // If the click target is the .timeline-content or directly on the .timeline-item,
+                // we assume they want to open the popup. For more precision, you could
+                // target a specific child element within timeline-item for the click.
+                // For simplicity, we'll assume a click anywhere on the item should trigger the popup.
+                const title = this.getAttribute('data-history-title');
+                const content = this.getAttribute('data-history-content');
+                openPopup(title, content);
+            });
+        });
+
+        function openPopup(title, content) {
+            popupTitle.textContent = title;
+            popupContent.textContent = content;
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            popup.style.display = 'none';
+        }
+
+        // Close popup if clicked outside (optional)
+        window.addEventListener('click', function(event) {
+            if (event.target == popup) {
+                closePopup();
+            }
+        });
+    </script>
+
+</body>
+</html>
